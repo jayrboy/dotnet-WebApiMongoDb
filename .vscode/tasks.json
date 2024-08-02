@@ -53,7 +53,14 @@
       "type": "docker-run",
       "label": "docker-run: debug",
       "dependsOn": ["docker-build: debug"],
-      "dockerRun": {},
+      "dockerRun": {
+        "ports": [
+          {
+            "containerPort": 8000,
+            "hostPort": 8000
+          }
+        ]
+      },
       "netCore": {
         "appProject": "${workspaceFolder}/WebApiMongoDb.csproj",
         "enableDebugging": true

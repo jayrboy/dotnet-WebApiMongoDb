@@ -55,3 +55,56 @@ docker compose ls
 
 docker compose down
 ```
+
+# Debugging
+
+https://code.visualstudio.com/docs/csharp/debugger-settings
+
+For launch.json
+
+```json
+{
+  "configurations": [
+    {
+      "name": "Docker .NET Launch",
+      "type": "docker",
+      "request": "launch",
+      "preLaunchTask": "docker-run: debug",
+      "netCore": {
+        "appProject": "${workspaceFolder}/WebApiMongoDb.csproj"
+      },
+      //TODO:
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+http://\\S+:([0-9]+)",
+        "uriFormat": "http://localhost:%s/swagger/index.html"
+      }
+    }
+  ]
+}
+```
+
+For tasks.json
+
+```json
+[
+  {
+    "type": "docker-run",
+    "label": "docker-run: debug",
+    "dependsOn": ["docker-build: debug"],
+    "dockerRun": {
+      //TODO:
+      "ports": [
+        {
+          "containerPort": 8000,
+          "hostPort": 8000
+        }
+      ]
+    },
+    "netCore": {
+      "appProject": "${workspaceFolder}/WebApiMongoDb.csproj",
+      "enableDebugging": true
+    }
+  }
+]
+```

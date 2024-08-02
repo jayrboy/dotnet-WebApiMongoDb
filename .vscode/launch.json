@@ -7,6 +7,11 @@
       "preLaunchTask": "docker-run: debug",
       "netCore": {
         "appProject": "${workspaceFolder}/WebApiMongoDb.csproj"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+http://\\S+:([0-9]+)",
+        "uriFormat": "http://localhost:%s/swagger/index.html"
       }
     }
   ]
